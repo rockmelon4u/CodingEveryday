@@ -1,0 +1,5 @@
+http://brackets.io/
+
+emmet plug in 
+
+open folder C:\Users\Jack\Documents\GitHub\Everydaycoding\for_WEB2-OAuth2.0\Web
