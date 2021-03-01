@@ -1,0 +1,6 @@
+2021년3월7일-2 Jar파일 이란https://ko.wikipedia.org/wiki/JAR_(%ED%8C%8C%EC%9D%BC_%ED%8F%AC%EB%A7%B7)JAR(Java Archive, 자바 아카이브)는 여러개의 자바 클래스 파일과, 클래스들이 이용하는 관련 리소스(텍스트, 그림 등) 및 메타데이터를 하나의 파일로 모아서 자바 플랫폼에 응용 소프트웨어나 라이브러리를 배포하기 위한 소프트웨어 패킷 파일 포맷이다.JAR 파일은 실제로 ZIP 파일 포맷으로 이루어진 압축 파일로서, 파일 확장자는 .jar 이다. 컴퓨터 사용자들은 JDK에 포함된 jar 명령어를 이용하여 JAR파일을 만들거나 압축을 풀 수 있다. 또, zip 도구를 사용할 수도 있으나 압축 시에는 매니페스트 파일이 처음이어야 하는 경우가 있어서 zip 파일 헤더의 엔트리 순서가 중요하다. 
+
+
+JAR파일 생성
+https://dodo1054.tistory.com/42?category=689499
+https://roeldowney.tistory.com/252
