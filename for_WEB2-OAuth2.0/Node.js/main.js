@@ -10,14 +10,14 @@ var app = http.createServer(function(request,response){
     console.log(queryData.id);
     if(_url == '/'){
         title = 'Welcome';
-        //_url = '/index.html';
+        //_url = '/index.html'; 조건이 / 일때 index.html로 하기 위해 설정
     }
     if(_url == '/favicon.ico'){
       return response.writeHead(404);
     }
     response.writeHead(200);
     
-    var template = `
+    var template = `        
     <!doctype html>
     <html>
     <head>
@@ -38,7 +38,7 @@ var app = http.createServer(function(request,response){
       </p>
     </body>
     </html>
-    `;
+    `;  //변수 받아오는 방법 ${}
     
     response.end(template);
     //response.end(queryData.id);   //여기가 쿼리 스트링으로 받을 수 있는 부분.
