@@ -7,6 +7,7 @@ var app = http.createServer(function(request,response){
     //console.log(url);
     //parrs 분석 검색할 시에 nodejs url parse query string
     var queryData = url.parse(_url, true).query;    //이 부분이 쿼리스트링에서 받아오는 값을 넣어주는 변수 세팅
+    var title = queryData.id;
     console.log(queryData.id);
     if(_url == '/'){
         title = 'Welcome';
@@ -16,7 +17,7 @@ var app = http.createServer(function(request,response){
       return response.writeHead(404);
     }
     response.writeHead(200);
-    
+    fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description){
     var template = `        
     <!doctype html>
     <html>
@@ -42,6 +43,7 @@ var app = http.createServer(function(request,response){
     
     response.end(template);
     //response.end(queryData.id);   //여기가 쿼리 스트링으로 받을 수 있는 부분.
+    })
  
 });
 app.listen(3000);
