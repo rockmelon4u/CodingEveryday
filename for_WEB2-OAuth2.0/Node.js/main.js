@@ -7,40 +7,52 @@ var app = http.createServer(function(request,response){
     //console.log(url);
     //parrs 분석 검색할 시에 nodejs url parse query string
     var queryData = url.parse(_url, true).query;    //이 부분이 쿼리스트링에서 받아오는 값을 넣어주는 변수 세팅
-    var title = queryData.id;
-    console.log(queryData.id);
-    if(_url == '/'){
-        title = 'Welcome';
-        //_url = '/index.html'; 조건이 / 일때 index.html로 하기 위해 설정
-    }
-    if(_url == '/favicon.ico'){
-      return response.writeHead(404);
-    }
-    response.writeHead(200);
-    fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description){ //각 파일이 본문이 description이 되는것.
-    var template = `        
-    <!doctype html>
-    <html>
-    <head>
-      <title>WEB1 - ${title}</title>
-      <meta charset="utf-8">
-    </head>
-    <body>
-      <h1><a href="/">WEB</a></h1>
-      <ul>
-        <li><a href="/?id=HTML">HTML</a></li>
-        <li><a href="/?id=CSS">CSS</a></li>
-        <li><a href="/?id=JavaScript">JavaScript</a></li>
-      </ul>
-      <h2>${title}</h2>
-      <p>${description}</p> //
-    </body>
-    </html>
-    `;  //변수 받아오는 방법 ${}
+    var pathname = url.parse(_url, true).pathname;
     
-    response.end(template);
+    var title = queryData.id;
+    //console.log(queryData.id);
+    console.log(url.parse(_url,true));
+    //if(_url == '/'){
+    //    title = 'Welcome';
+        //_url = '/index.html'; 조건이 / 일때 index.html로 하기 위해 설정
+    //}
+    //if(_url == '/favicon.ico'){
+    //  return response.writeHead(404);
+    //}
+    if(pathname === '/'){   //여기가 기본 경로, 다른 경로로 들어올경우, 
+        fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description){ //각 파일이 본문이 description이 되는것.
+            var template = `        
+            <!doctype html>
+            <html>
+            <head>
+              <title>WEB1 - ${title}</title>
+              <meta charset="utf-8">
+            </head>
+            <body>
+              <h1><a href="/">WEB</a></h1>
+              <ul>
+                <li><a href="/?id=HTML">HTML</a></li>
+                <li><a href="/?id=CSS">CSS</a></li>
+                <li><a href="/?id=JavaScript">JavaScript</a></li>
+              </ul>
+              <h2>${title}</h2>
+              <p>${description}</p> //
+            </body>
+            </html>
+            `;  //변수 받아오는 방법 ${}
+            response.writeHead(200);    //200은, 파일을 성공적으로 전송했다
+            response.end(template);
+        });
+    } else {
+        response.writeHead(404);
+        response.end('Not found')
+    }
+
+    
+    
+    //response.end(template);
     //response.end(queryData.id);   //여기가 쿼리 스트링으로 받을 수 있는 부분.
-    })
+    //})
  
 });
 app.listen(3000);
