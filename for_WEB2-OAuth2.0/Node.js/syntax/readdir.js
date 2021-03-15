@@ -2,7 +2,7 @@ var testFolder = './data';
 var fs = require('fs');     //File System모듈 전체 메소드 https://nodejs.org/api/fs.html
  
 fs.readdir(testFolder, function(error, filelist){
-  console.log(filelist);
+  console.log(filelist);  //[ 'CSS', 'HTML', 'JavaScript' ] 이런 식으로 출력
 })
 
 //<li><a href="/?id=HTML">HTML</a></li>
