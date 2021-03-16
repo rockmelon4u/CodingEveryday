@@ -21,7 +21,6 @@ fs.readFile('syntax/sample.txt', 'utf8', function(err, result){
 console.log('C');
 //ACB
 
-
 /*----------
 synchronous 동기
 asynchronous 비동기
