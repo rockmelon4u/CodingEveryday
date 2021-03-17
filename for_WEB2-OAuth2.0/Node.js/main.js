@@ -1,6 +1,7 @@
 var http = require('http');
 var fs = require('fs');
 var url = require('url');
+var qs = require('querystring');
  
 function templateHTML(title, list, body){
   return `
@@ -60,7 +61,7 @@ var app = http.createServer(function(request,response){
         var title = 'WEB - create';
         var list = templateList(filelist);
         var template = templateHTML(title, list, `
-          <form action="http://localhost:3000/process_create" method="post">
+          <form action="http://localhost:3000/create_process" method="post">
             <p><input type="text" name="title" placeholder="title"></p>
             <p>
               <textarea name="description" placeholder="description"></textarea>
@@ -73,6 +74,19 @@ var app = http.createServer(function(request,response){
         response.writeHead(200);
         response.end(template);
       });
+    } else if(pathname === '/create_process'){
+      var body = '';
+      request.on('data', function(data){
+          body = body + data;
+      });   //수신할때 마다 콜백 호출하고, data라는 인자를 통해서 조금씩 붙여나가는 형식이랄까..
+      request.on('end', function(){
+          var post = qs.parse(body);
+          console.log(post);
+          var title = post.title;
+          var description = post.description
+      });
+      response.writeHead(200);
+      response.end('success');
     } else {
       response.writeHead(404);
       response.end('Not found');
