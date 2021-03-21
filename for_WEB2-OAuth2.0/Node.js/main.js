@@ -14,7 +14,7 @@ function templateHTML(title, list, body){
   <body>
     <h1><a href="/">WEB</a></h1>
     ${list}
-    <a href="/create">create</a>
+    <a href="/create">create</a> 
     ${body}
   </body>
   </html>
@@ -81,12 +81,14 @@ var app = http.createServer(function(request,response){
       });   //수신할때 마다 콜백 호출하고, data라는 인자를 통해서 조금씩 붙여나가는 형식이랄까..
       request.on('end', function(){
           var post = qs.parse(body);
-          console.log(post);
+          //console.log(post);
           var title = post.title;
           var description = post.description
+          fs.writeFile(`data/${title}`, description, 'utf8', function(err){
+            response.writeHead(302, {Location: `/?id=${title}`});       //302는 페이지를 다른 곳으로 리다이렉션 
+            response.end();
+          })
       });
-      response.writeHead(200);
-      response.end('success');
     } else {
       response.writeHead(404);
       response.end('Not found');
@@ -96,3 +98,8 @@ var app = http.createServer(function(request,response){
  
 });
 app.listen(3000);
+
+/*
+ nodejs file write\
+ nodejs redirection
+*/
