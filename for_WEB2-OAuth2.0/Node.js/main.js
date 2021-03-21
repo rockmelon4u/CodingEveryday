@@ -50,7 +50,20 @@ var app = http.createServer(function(request,response){
           fs.readFile(`data/${queryData.id}`, 'utf8', function(err, description){
             var title = queryData.id;
             var list = templateList(filelist);
-            var template = templateHTML(title, list, `<h2>${title}</h2>${description}`, `<a href="/create">create</a> <a href="/update?id=${title}">update</a>)`);
+            var template = templateHTML(title, list, `<h2>${title}</h2>${description}`, 
+            `
+            <a href="/create">create</a> 
+            <a href="/update?id=${title}">update</a>
+            <form action="delete_process" method="post">
+                <input type="hidden" name="id" value="${title}">
+                <input type="submit" value="delete">
+            </form>
+            `);
+            //<a href="/delete?id=${title}">delete</a> 이런식으로 링크로 만들면 대단히 잘못됨,
+            //링크는 클릭했을 때 이동, 무언가를 보낼수 있다. 미리 다운로드 받는 캐싱이라는 기능.
+            // 이 기능이 활성화 된 상태에서, 겟방식으로 구현해 놓았더니,
+            // 플러그 인이 미리 찾아서 들어가서 삭제해놓아버린 상태.
+            // 삭제는 링크로 하면 안된다.
             response.writeHead(200);
             response.end(template);
           });
@@ -133,6 +146,22 @@ var app = http.createServer(function(request,response){
           })
           });
 
+      });
+    }
+    else if(pathname === `/delete_process`){
+        var body = '';
+      request.on('data', function(data){
+          body = body + data;
+      });   //수신할때 마다 콜백 호출하고, data라는 인자를 통해서 조금씩 붙여나가는 형식이랄까..
+      request.on('end', function(){
+          var post = qs.parse(body);
+          //console.log(post);
+          var id = post.id;
+          //nodejs delete file
+          fs.unlink(`data/${id}`, function(error){
+            response.writeHead(302, {Location: `/`});      
+            response.end();
+          })
       });
     }
     else {
