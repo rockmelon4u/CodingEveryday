@@ -1,0 +1,17 @@
+//정수를 하나 입력 받고, 이 정수가 앞으로 입력받을 변수의 갯수
+Scanner sc = new Scanner(System.in);
+int n = sc.nextInt();
+String dummy = sc.nextLine(); //쓰레기값처리(정수값 뒤의 엔터처리용)
+String[] line = new String[n];
+for(int i = 0; i < n; i++){
+	line[i] = sc.nextLine();
+}
+
+//출력전용 메소드
+public static void printM(String a){
+	System.out.println(a);
+}
+
+//문자열관련 a = 일이삼사오
+//a.substring(0, a.length()-1)  = 일이삼사
+//a.substring(a.length()-2, a.length()-1) = 사오
