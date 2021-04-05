@@ -24,7 +24,7 @@ app.get('/', function(request, response) {
     response.send(html);
   });
 });
- 
+
 app.get('/page/:pageId', function(request, response) { 
   fs.readdir('./data', function(error, filelist){
     var filteredId = path.parse(request.params.pageId).base;
