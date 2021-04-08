@@ -4,10 +4,15 @@
     "description" : "Base Level Extension",
     "version": "1.0"
     
+    // background scripts
+    ,"background": {
+        "service_worker": "background.js"
+    }
+    
+    ,"permissions": ["storage"]
+    // background scripts
 
-
-    ,
-    "browser_action": {
+    ,"browser_action": {
         "default_icon": "icon.png",
         "default_popup": "popup.html"
     }
