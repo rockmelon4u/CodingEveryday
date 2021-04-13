@@ -7,6 +7,9 @@ const path = require('path');
 const qs = require('querystring');
 var bodyParser = require('body-parser')
 
+//static files
+app.use(express.static('public'));
+
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -16,7 +19,8 @@ const { request } = require('http');
 app.use(compression());
 
 //리스트를 호출하는 미들웨어를 만들어보자
-app.use(function(request, response, next){
+//app.use(function(request, response, next){
+app.get('*', function(request, response, next){
   fs.readdir('./data', function(error, filelist){
     request.list = filelist;
     next();
@@ -31,7 +35,8 @@ app.get('/', function(request, response) {
   var description = 'Hello, Node.js';
   var list = template.list(request.list);
   var html = template.HTML(title, list,
-    `<h2>${title}</h2>${description}`,
+    `<h2>${title}</h2>${description},
+    <img src="/images/hello.jpg" style="width:300px; display:block"></img>`,
     `<a href="/create">create</a>`
   ); 
   response.send(html);
