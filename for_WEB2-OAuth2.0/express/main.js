@@ -10,6 +10,10 @@ var bodyParser = require('body-parser')
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
+//압축
+var compression = require('compression')
+app.use(compression());
+
 //route, routing
 //app.get('/', (req, res) => res.send('Hello World!'))
 app.get('/', function(request, response) { 
