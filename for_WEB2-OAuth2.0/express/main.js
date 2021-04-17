@@ -63,9 +63,9 @@ app.get('/page/:pageId', function(request, response, next) {
             <input type="hidden" name="id" value="${sanitizedTitle}">
             <input type="submit" value="delete">
           </form>`
-          /*<form action="delete_process" method="post">
+          /*<form action="/delete_process" method="post">
                           / 위처럼, 여기에 슬러시를 주면
-                          클릭했을때 최상위 밑의 
+                          클릭했을때 최상위 밑의
           */
       );
       response.send(html);
