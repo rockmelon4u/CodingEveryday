@@ -1,11 +1,12 @@
 var express = require('express')
 var app = express()
-const fs = require('fs');
-const sanitizeHtml = require('sanitize-html');
-const template = require('./lib/template.js');
-const path = require('path');
-const qs = require('querystring');
+var fs = require('fs');
+var template = require('./lib/template.js');
+var qs = require('querystring');
 var bodyParser = require('body-parser')
+
+//라우터로 파일분리
+var topicRouter = require('./routes/topic');
 
 //static files
 app.use(express.static('public'));
@@ -15,8 +16,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 //압축
 var compression = require('compression');
-const { request } = require('http');
-const { send } = require('process');
+var { request } = require('http');
+var { send } = require('process');
 app.use(compression());
 
 //리스트를 호출하는 미들웨어를 만들어보자
@@ -27,6 +28,9 @@ app.get('*', function(request, response, next){
     next();
   });
 });
+
+app.use('/topic', topicRouter);
+// /topic으로 시작하는 주소 이름은 미드웨어를 적용하겠다라는 의미.
 
 //route, routing
 //app.get('/', (req, res) => res.send('Hello World!'))
@@ -43,159 +47,6 @@ app.get('/', function(request, response) {
   response.send(html);
 });
 
-app.get('/topic/create', function(request, response){
-  var title = 'WEB - create';
-  var list = template.list(request.list);
-  var html = template.HTML(title, list, `
-    <form action="/topic/create_process" method="post">
-      <p><input type="text" name="title" placeholder="title"></p>
-      <p>
-        <textarea name="description" placeholder="description"></textarea>
-      </p>
-      <p>
-        <input type="submit">
-      </p>
-    </form>
-  `, '');
-  response.send(html);
-});
-
-app.post('/topic/create_process', function(request, response){
-
-  /*
-  var body = '';
-  request.on('data', function(data){
-      body = body + data;
-  });
-  request.on('end', function(){
-      var post = qs.parse(body);
-      var title = post.title;
-      var description = post.description;
-      fs.writeFile(`data/${title}`, description, 'utf8', function(err){
-        response.writeHead(302, {Location: `/?id=${title}`});
-        response.end();
-      })
-  });
-  */
-  var post = request.body;
-  var title = post.title;
-  var description = post.description;
-  fs.writeFile(`data/${title}`, description, 'utf8', function(err){
-    response.writeHead(302, {Location: `/topic/${title}`});
-    response.end();
-  })
-});
-
-app.get('/topic/update/:pageId', function(request, response){
-  var filteredId = path.parse(request.params.pageId).base;
-  fs.readFile(`data/${filteredId}`, 'utf8', function(err, description){
-    var title = request.params.pageId;
-    var list = template.list(request.list);
-    var html = template.HTML(title, list,
-      `
-      <form action="/topic/update_process" method="post">
-        <input type="hidden" name="id" value="${title}">
-        <p><input type="text" name="title" placeholder="title" value="${title}"></p>
-        <p>
-          <textarea name="description" placeholder="description">${description}</textarea>
-        </p>
-        <p>
-          <input type="submit">
-        </p>
-      </form>
-      `,
-      `<a href="/topic/create">create</a> <a href="/topic/update/${title}">update</a>`
-    );
-    //위의 코드에서 /update?id=${title} 부분은 /update/${title}로 수정 되어야 하는 버그입니다. 
-    response.send(html);
-  });
-});
- 
-app.post('/topic/update_process', function(request, response){
-  /*var body = '';
-  request.on('data', function(data){
-      body = body + data;
-  });
-  request.on('end', function(){
-      var post = qs.parse(body);
-      var id = post.id;
-      var title = post.title;
-      var description = post.description;
-      fs.rename(`data/${id}`, `data/${title}`, function(error){
-        fs.writeFile(`data/${title}`, description, 'utf8', function(err){
-          response.redirect('/');
-        })
-      });
-  });
-  */
-  var post = request.body;
-  var id = post.id;
-  var title = post.title;
-  var description = post.description;
-  fs.rename(`data/${id}`, `data/${title}`, function(error){
-    fs.writeFile(`data/${title}`, description, 'utf8', function(err){
-      response.redirect('/');
-    })
-  });
-
-});
-
-app.post('/topic/delete_process', function(request, response){
-  /*
-  var body = '';
-  request.on('data', function(data){
-      body = body + data;
-  });
-  request.on('end', function(){
-      var post = qs.parse(body);
-      var id = post.id;
-      var filteredId = path.parse(id).base;
-      fs.unlink(`data/${filteredId}`, function(error){
-        
-          response.writeHead(302, {Location: `/update/${title}`});
-          response.end();
-        
-        response.redirect('/');
-      })
-
-  */
-  var post = request.body;
-  var id = post.id;
-  var filteredId = path.parse(id).base;
-  fs.unlink(`data/${filteredId}`, function(error){  
-    response.redirect('/');
-  });
-})
-
-app.get('/topic/:pageId', function(request, response, next) { 
-  var filteredId = path.parse(request.params.pageId).base;
-  fs.readFile(`data/${filteredId}`, 'utf8', function(err, description){
-    if(err){
-      next(err);
-    } else {
-      var title = request.params.pageId;
-      var sanitizedTitle = sanitizeHtml(title);
-      var sanitizedDescription = sanitizeHtml(description, {
-        allowedTags:['h1']
-      });
-      var list = template.list(request.list);
-      var html = template.HTML(sanitizedTitle, list,
-        `<h2>${sanitizedTitle}</h2>${sanitizedDescription}`,
-        ` <a href="/topic/create">create</a>
-          <a href="/topic/update/${sanitizedTitle}">update</a>
-          <form action="/topic/delete_process" method="post">
-            <input type="hidden" name="id" value="${sanitizedTitle}">
-            <input type="submit" value="delete">
-          </form>`
-          /*<form action="/delete_process" method="post">
-                          / 위처럼, 여기에 슬러시를 주면
-                          클릭했을때 최상위 밑의
-          */
-      );
-      response.send(html);
-    }
-  });
-});
 
 
 
