@@ -6,7 +6,6 @@ public interface Animal {
 	static int rabit = 2;
 	
 	public void eat();
-	public void travel();
 }
 
 /*
