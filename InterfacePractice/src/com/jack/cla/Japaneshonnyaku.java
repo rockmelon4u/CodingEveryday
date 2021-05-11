@@ -1,5 +1,9 @@
 package com.jack.cla;
-
+/*
+ * @author 사람2
+ * 
+ * 
+ */
 public class Japaneshonnyaku {
 	public String translateJapanese(String str) {
 		//Todo: 한국어를 일본어로 번역
