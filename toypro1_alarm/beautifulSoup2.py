@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup as bs #bs4 모듈에 있는 BeautifulSoup 함수�
 # 정적인 페이지를 읽어들일때 유효
 
 url = 'https://www.naver.com/'  #3.4버전 부터 작은 따옴표가 기본
+response = requests.get(url)
 html_text = requests.get(url).text
 # requests.get함수의 첫 번째 인자로 가져오고 싶은 url 주소를 입력.
 # return 값으로 <Response [200]> 을 받는다. 그러면 통신 성공.
