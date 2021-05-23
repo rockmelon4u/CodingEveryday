@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 def function_Line_Notify(ip):   #함수 정의
     url = 'https://notify-api.line.me/api/notify'
-    token = 'T1YvzPHCtdBGRwQOLV0JyzT8OdFvnrQv9oVfPw9z6Fr'
+    token = 'HQuiYYhXHvJHF8f3egR6SGnh6R8Ybl5dyDIqQIWD6Nl'
     headers = {
         'Content-Type': "application/x-www-form-urlencoded",
         'Cache-Control': "no-cache",
@@ -24,7 +24,7 @@ if response.status_code == 200:
     # for num in nums:
     # print(num.get_text())
     n = len(nums)   #크기
-    # print(n)
+    print(n)
 
     if n > 3:
         ip = '게시물이 4개 이상입니다. \n' + url

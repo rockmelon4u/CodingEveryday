@@ -1,6 +1,6 @@
 import requests
 url = 'https://notify-api.line.me/api/notify'
-token = 'T1YvzPHCtdBGRwQOLV0JyzT8OdFvnrQv9oVfPw9z6Fr'   #Generated token what you get personally
+token = 'HQuiYYhXHvJHF8f3egR6SGnh6R8Ybl5dyDIqQIWD6Nl'   #Generated token what you get personally
 msg = 'Line msg test'   #messege what you want to text
 headers = { 
     'Content-Type' : "application/x-www-form-urlencoded",

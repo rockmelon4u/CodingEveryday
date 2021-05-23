@@ -10,7 +10,7 @@ if response.status_code == 200:
     soup = BeautifulSoup(html, 'html.parser')
     nums = soup.select('#content > table > tbody > tr > td > a')
     # for num in nums:
-        # print(num.get_text())
+    #     print(num.get_text())
     n = len(nums)
     print(n)
 
