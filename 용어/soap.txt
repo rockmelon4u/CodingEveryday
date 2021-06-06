@@ -1,1 +1,2 @@
 SOAP(Simple Object Access Protocol)
+-SOAP는 XML을 이용해서 분산처리 환경에서 정보교환을 쉽게 할 수 있도록 도와주는 장치
