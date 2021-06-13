@@ -1,0 +1,39 @@
+HTML <html> 태그
+
+정의 및 특징
+<html> 태그는 HTML 문서의 루트 요소(root element)를 정의할 때 사용합니다.
+
+<html> 요소는 DOCTYPE 선언을 제외한 모든 다른 HTML 요소를 포함하기 위한 컨테이너이며, 브라우저에게 해당 문서가 HTML 문서임을 알려주는 역할을 합니다.
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>HTML 문서의 제목입니다.</title>
+</head>
+<body>
+    HTML 문서의 콘텐츠(contents) 영역입니다.
+</body>
+</html>
+
+HTML과 XHTML에서의 차이점
+HTML과 달리 XHTML에서는 <html> 요소에 xmlns 속성이 반드시 명시되어야 합니다.
+
+하지만 W3C에서 제공하는 HTML 유효성 검사에서는 XHTML 문서의 <html> 태그에 xmlns 속성이 명시되어 있지 않아도 유효성 검사를 무사히 통과할 것입니다.
+
+이것은 해당 유효성 검사에 사용되는 네임스페이스(namespace)의 기본값이 “xmlns=http://www.w3.org/1999/xhtml”로 설정되어 있기 때문에 <html> 태그에 xmlns 속성이 명시되어 있지 않더라도 <html> 태그에 xmlns 속성을 자동으로 추가해 주기 때문입니다.
+
+
+<html> 태그의 xmlns 속성
+정의 및 특징
+<html> 태그의 xmlns 속성은 해당 문서를 위한 XML 네임스페이스(namespace)를 명시합니다.
+
+xmlns 속성은 해당 문서가 XHTML 문서일 경우 반드시 명시되어야 하며, HTML 4.01에서는 유효하지 않으며, HTML5에서는 선택 사항입니다.
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+XML 네임스페이스(namespace)
+네임스페이스는 같은 이름의 앨리먼트와 속성이 문서에서 서로 충돌을 일으키지 않도록 이름을 구별할 수 있도록 해주는 표준 규약이다.
+문서 내에서 이름충돌이 일으킬 수 있는 앨리먼트나 속성 이름에 고유한 이름을 갖는 접두사(prefix)를 지정함으로써 그 이름이 문서 내에서 유일하다는 것을 보장하도록 한다. 또한, DTD 내에 있는 앨리멘트나 속성의 이름충돌을 방지하기 위해 적용될 수가 있다.
+
+이러한 XML 네임스페이스는 URI(Uniform Resource Identifiers)로 식별된다.
