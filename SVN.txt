@@ -1,0 +1,21 @@
+SVN
+
+SVN(Subversion)
+
+表2.1 リポジトリにアクセスするURL
+
+
+スキーマ
+アクセス方法
+file://
+ローカルないしネットワークドライブのリポジトリに直接アクセスします。
+http://
+Subversion を組み込んだ Apache サーバーに WebDAV プロトコルでアクセスします。
+
+
+
+이클립스에서도 연동 가능 (플러그인 설치 필요)
+http://lmc.cs.kookmin.ac.kr/readmore/eclipse-svn
+
+VisualSVN server
+다른사람과 협업할때 사용
