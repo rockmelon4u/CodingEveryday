@@ -1,0 +1,2 @@
+Boolean a; // default : null
+boolean b; // defualt : false
